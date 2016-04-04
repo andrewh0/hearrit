@@ -1,4 +1,8 @@
-angular.module('hearrit', ['ui.router'])
+angular.module('hearrit', [
+  'hearrit.search',
+  'hearrit.recommends',
+  'hearrit.chart',
+  'ui.router'])
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider
