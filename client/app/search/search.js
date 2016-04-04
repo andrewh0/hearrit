@@ -1,5 +1,5 @@
 angular.module('hearrit.search', [])
-.controller('searchController', function($scope, Search) {
+.controller('searchController', function($scope, Search, Recommends) {
   $scope.query = '';
   $scope.searchResults = [];
 
@@ -9,5 +9,12 @@ angular.module('hearrit.search', [])
       $scope.searchResults = results;
     })
   };
+
+  $scope.recommend = function(trackID) {
+    Recommends.recommendTrack(trackID)
+    .then(function(result) {
+      return result;
+    })
+  }
 
 });
