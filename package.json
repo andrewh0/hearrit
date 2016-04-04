@@ -4,6 +4,7 @@
   "description": "MVP",
   "main": "./server/server.js",
   "dependencies": {
+    "bluebird": "^3.3.4",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "node-soundcloud": "0.0.5"

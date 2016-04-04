@@ -4,8 +4,8 @@ var keys = require('./config');
 
 SC.init({
   id: keys.clientID,
-  secret: keys.clientSecret,
-  uri: 'http://example.com/callback'
+  secret: keys.clientSecret
+  // uri: 'http://example.com/callback'
 })
 
 var app = express();
@@ -14,8 +14,14 @@ var app = express();
 
 app.listen(8000);
 
+// SC.get('/resolve', {
+//   url: 'https://soundcloud.com/kanyewest/ultralight-beam'
+// }, function(err, user) {
+//   console.log('kanye\'s id', user);
+// });
+
 app.get('/', function(req, res) {
-  SC.get('/tracks/13158665', function(err, track) {
+  SC.get('/tracks', {q: 'buskers'}, function(err, track) {
     if (err) {
       console.log('err', err);
       // resjson(err);
@@ -23,6 +29,7 @@ app.get('/', function(req, res) {
       res.json(track);
     }
   });
+
 });
 
 module.exports = app;
