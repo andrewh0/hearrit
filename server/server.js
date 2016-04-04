@@ -10,9 +10,9 @@ SC.init({
 
 var app = express();
 
-// app.use(__dirname + '/client/');
 
 app.listen(8000);
+app.use(express.static('client'));
 
 // SC.get('/resolve', {
 //   url: 'https://soundcloud.com/kanyewest/ultralight-beam'
@@ -26,10 +26,22 @@ app.get('/', function(req, res) {
       console.log('err', err);
       // resjson(err);
     } else {
-      res.json(track);
+      // res.json(track);
+      res.render('index');
     }
   });
+});
 
+app.get('/songs', function(req, res) {
+  SC.get('/tracks', {q: 'buskers'}, function(err, track) {
+    if (err) {
+      console.log('err', err);
+      // resjson(err);
+    } else {
+      // res.json(track);
+      res.render('index');
+    }
+  });
 });
 
 module.exports = app;
