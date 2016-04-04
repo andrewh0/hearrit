@@ -1,0 +1,10 @@
+{
+  "name": "hearrit",
+  "version": "0.0.0",
+  "authors": [],
+  "license": "MIT",
+  "ignore": [],
+  "dependencies": {
+    "angular": "~1.3.16"
+  }
+}
