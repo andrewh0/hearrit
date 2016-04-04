@@ -1,4 +1,5 @@
 angular.module('hearrit', [
+  'hearrit.services',
   'hearrit.search',
   'hearrit.recommends',
   'hearrit.chart',

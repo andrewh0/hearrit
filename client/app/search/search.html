@@ -1,12 +1,13 @@
 <div id="search" ng-controller="searchController">
   <h1>SEARCH</h1>
-  <form name="searchForm">
+  <form name="searchForm" ng-submit="search()">
     <input type="text" name="searchInput" placeholder="Search SoundCloud..." ng-model="query">
+    <button name="searchSubmit">Search</button>
   </form>
   <h1>RESULTS</h1>
-  <div ng-repeat="result in results">
+  <div ng-repeat="result in searchResults">
     <p>{{result.title}}</p>
-    <p>by {{result.artist}}</p>
-    <a href="{{result.link}}">Listen on SoundCloud</a>
+    <p>by {{result.user.username}}</p>
+    <a href="{{result.permalink_url}}">Listen on SoundCloud</a>
   </div>
 </div>
