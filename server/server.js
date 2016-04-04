@@ -24,15 +24,6 @@ app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
   res.render('index');
-  // SC.get('/tracks', {q: 'buskers'}, function(err, track) {
-  //   if (err) {
-  //     console.log('Err', err);
-  //     // resjson(err);
-  //   } else {
-  //     // res.json(track);
-  //
-  //   }
-  // });
 });
 
 app.post('/api/search', function(req, res) {
@@ -40,13 +31,15 @@ app.post('/api/search', function(req, res) {
   SC.get('/tracks', req.body.query, function(err, track) {
     if (err) {
       console.log('err', err);
-      // resjson(err);
     } else {
-      // res.json(track);
-      // res.render('index');
       res.json(track);
     }
   });
+});
+
+app.post('/api/recommend', function(req, res) {
+  console.log(req.body.trackID);
+  res.json({hello: 'hi'});
 });
 
 module.exports = app;
