@@ -90,6 +90,12 @@ app.post('/api/recommend', function(req, res) {
   });
 });
 
+app.get('/api/recommended', function(req, res) {
+  var user = req.session;
+  console.log(user);
+  res.json(user.recommendedTracks);
+});
+
 app.post('/api/chart', function(req, res) {
   var currUser = req.body.user;
   Track.find({}, function(error, tracks) {

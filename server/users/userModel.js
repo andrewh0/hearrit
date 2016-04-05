@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
   username: String,
   password: String,
-  recommendedTracks: [Number]
+  recommendedTracks: { type : Array , "default" : [] }
 });
 
 var User = mongoose.model('User', userSchema);

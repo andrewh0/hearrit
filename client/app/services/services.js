@@ -34,8 +34,19 @@ angular.module('hearrit.services', [])
       console.log('Error recommending track: ', response);
     })
   };
+  var getAllRecommended = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/recommended',
+    }).then(function successCallback(response) {
+      return response.data;
+    }, function errorCallback(response) {
+      console.log('Error getting all recommended tracks: ', response);
+    })
+  };
    return {
-     recommendTrack: recommendTrack
+     recommendTrack: recommendTrack,
+     getAllRecommended: getAllRecommended
    }
 })
 .factory('Chart', function($http) {
