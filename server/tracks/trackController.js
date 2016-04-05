@@ -6,9 +6,20 @@ module.exports = {
     .then(function(foundTrack) {
       if (foundTrack) {
         res.json(foundTrack);
+      } else {
+        Track.create(req.body.track, function(err, track) {
+          if (err) {
+            console.log('Error creating new track: ', err);
+            next(err);
+          }
+          console.log('Track has been added to the DB');
+          res.json(track);
+        });
       }
-      Track.create()
     })
+    // .catch(function(error) {
+    //   next(error);
+    // })
   },
   addRecommend: function(req, res, next) {
     Track.findOne({trackID: req.body.track.trackID})
@@ -25,8 +36,8 @@ module.exports = {
         res.json(savedTrack);
       })
     })
-    .fail(error) {
+    .fail(function(error) {
       next(error);
-    }
+    })
   }
 }
