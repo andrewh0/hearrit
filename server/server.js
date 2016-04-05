@@ -2,12 +2,15 @@ var express = require('express');
 var SC = require('node-soundcloud');
 var keys = require('./config');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 SC.init({
   id: keys.clientID,
   secret: keys.clientSecret
   // uri: 'http://example.com/callback'
 })
+
+mongoose.connect('mongodb://localhost/hearrit');
 
 var app = express();
 
