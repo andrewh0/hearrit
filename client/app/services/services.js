@@ -33,6 +33,24 @@ angular.module('hearrit.services', [])
       console.log('Error recommending track: ', response);
     })
   };
+  var recommendChartTrack = function(track) {
+    return $http({
+      method: 'POST',
+      url: '/api/recommend',
+      data: {track: {
+        id: track.id,
+        title: track.title,
+        artist: track.artist,
+        url: track.url
+      }}
+    }).then(function successCallback(response) {
+      // console.log('RESPONSE from LIKING CHARRT', response.data);
+      return response.data;
+    }, function errorCallback(response) {
+      console.log('Error recommending track: ', response);
+    })
+  }
+
   var getAllRecommended = function() {
     return $http({
       method: 'GET',
@@ -46,6 +64,7 @@ angular.module('hearrit.services', [])
   };
    return {
      recommendTrack: recommendTrack,
+     recommendChartTrack: recommendChartTrack,
      getAllRecommended: getAllRecommended
    }
 })
