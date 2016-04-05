@@ -74,7 +74,20 @@ angular.module('hearrit.services', [])
       console.log('Error signing up or logging in: ', response.data);
     })
   };
+  var logout = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/logout',
+    })
+    .then(function successCallback(response) {
+      $location.path('/login');
+    }, function errorCallback(response) {
+      console.log('Could not log out: ', response.data);
+    });
+  }
+
   return {
-    loginOrSignup: loginOrSignup
+    loginOrSignup: loginOrSignup,
+    logout: logout
   }
 });

@@ -25,8 +25,11 @@ angular.module('hearrit', [
     templateUrl: 'app/auth/login.html'
   })
 })
-.controller('indexController', function($scope, $location) {
+.controller('indexController', function($scope, $location, Auth) {
   $scope.isLoggingIn = function() {
     return $location.url() == '/login';
+  }
+  $scope.logout = function() {
+    Auth.logout();
   }
 });

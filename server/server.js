@@ -3,6 +3,7 @@ var SC = require('node-soundcloud');
 var keys = require('./config');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 // var tracks = require('./tracks/trackController.js');
 var Track = require('./tracks/trackModel.js');
@@ -113,6 +114,7 @@ app.post('/api/login', function(req, res) {
             console.log('Could not create session: ', err);
           }
           req.session.user = createdUser;
+          console.log('SESSION:', req.session);
           res.json(createdUser);
         });
       });
@@ -123,6 +125,7 @@ app.post('/api/login', function(req, res) {
             console.log('Could not create session: ', err);
           }
           req.session.user = user;
+          console.log('SESSION:', req.session);
           res.json(user); 
         });
       } else {
