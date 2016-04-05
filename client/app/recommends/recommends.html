@@ -1,4 +1,10 @@
 <div id="recommends" ng-controller="recommendsController">
   <h1>LIKES</h1>
   <p ng-show="recommendedTracks.length === 0">Tracks you like will show up here.</p>
+  <div ng-repeat="result in recommendedTracks">
+    <p><b>{{result.title}}</b> by {{result.artist}}</p>
+    <a href="{{result.permalink_url}}">Listen on SoundCloud</a>
+    <br/>
+    <br/>
+  </div>
 </div>

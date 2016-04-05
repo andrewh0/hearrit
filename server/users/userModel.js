@@ -4,7 +4,12 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
   username: String,
   password: String,
-  recommendedTracks: { type : Array , "default" : [] }
+  recommendedTracks: [{
+    id: Number,
+    title: String,
+    artist: String,
+    url: String
+  }]
 });
 
 var User = mongoose.model('User', userSchema);

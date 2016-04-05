@@ -39,7 +39,8 @@ angular.module('hearrit.services', [])
       method: 'GET',
       url: '/api/recommended',
     }).then(function successCallback(response) {
-      return response.data;
+      // console.log('Response from server is', response);
+      return response.data.recommendedTracks;
     }, function errorCallback(response) {
       console.log('Error getting all recommended tracks: ', response);
     })
