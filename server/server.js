@@ -3,6 +3,8 @@ var SC = require('node-soundcloud');
 var keys = require('./config');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+// var tracks = require('./tracks/trackController.js');
+var Track = require('./tracks/trackModel.js');
 
 SC.init({
   id: keys.clientID,
@@ -41,8 +43,44 @@ app.post('/api/search', function(req, res) {
 });
 
 app.post('/api/recommend', function(req, res) {
-  console.log(req.body.track);
-  res.json({hello: 'hi'});
+  console.log('Recommended', req.body.track);
+  var selectedTrack = req.body.track;
+
+  Track.findOne({id: selectedTrack.id}, function (error, track) {
+    if (error) {
+      console.log(error);
+    }
+    console.log(track);
+    if (track === null) {
+      // console.log('creating track!');
+      Track.create(selectedTrack, function(err, newTrack) {
+        if (err) {
+          console.log(err);
+        }
+        newTrack.recommends = 1;
+        newTrack.save(function(err, saved) {
+          if (err) {
+            console.log('Error updating recommend count: ', err);
+          }
+          res.send(saved);
+        });
+      });
+    } else {
+      // if track already exists in the db
+      // console.log('recommends++');
+      track.recommends += 1;
+      track.save(function(err, saved) {
+        if (err) {
+          console.log('Error updating recommend count: ', err);
+        }
+        res.send(track);
+      });
+    }
+  });
+
+
+  // res.json({hello: 'hi'});
 });
+
 
 module.exports = app;
