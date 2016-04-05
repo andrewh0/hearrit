@@ -3,9 +3,10 @@ angular.module('hearrit', [
   'hearrit.search',
   'hearrit.recommends',
   'hearrit.chart',
+  'hearrit.auth',
   'ui.router'])
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/login');
   $stateProvider
   .state('chart', {
     url: '/chart',
@@ -18,5 +19,9 @@ angular.module('hearrit', [
   .state('recommends', {
     url: '/recommends',
     templateUrl: 'app/recommends/recommends.html'
+  })
+  .state('login', {
+    url: '/login',
+    templateUrl: 'app/auth/login.html'
   })
 })

@@ -35,7 +35,7 @@ app.post('/api/search', function(req, res) {
   console.log(req.body);
   SC.get('/tracks', req.body.query, function(err, track) {
     if (err) {
-      console.log('err', err);
+      console.log('Error searching for track: ', err);
     } else {
       res.json(track);
     }
@@ -43,8 +43,12 @@ app.post('/api/search', function(req, res) {
 });
 
 app.post('/api/recommend', function(req, res) {
-  console.log('Recommended', req.body.track);
+  // console.log('Recommended', req.body.track);
   var selectedTrack = req.body.track;
+  // var currentUser = req.body.user;
+  // Check currentUser to see if track has already been Recommended
+  // if already recommended, res.send(track);
+  // else...
 
   Track.findOne({id: selectedTrack.id}, function (error, track) {
     if (error) {
@@ -52,16 +56,16 @@ app.post('/api/recommend', function(req, res) {
     }
     console.log(track);
     if (track === null) {
-      // console.log('creating track!');
       Track.create(selectedTrack, function(err, newTrack) {
         if (err) {
-          console.log(err);
+          console.log('Error creating a new track', err);
         }
         newTrack.recommends = 1;
         newTrack.save(function(err, saved) {
           if (err) {
             console.log('Error updating recommend count: ', err);
           }
+          // SAVE TRACK TO USER DOC
           res.send(saved);
         });
       });
@@ -73,13 +77,11 @@ app.post('/api/recommend', function(req, res) {
         if (err) {
           console.log('Error updating recommend count: ', err);
         }
+        // SAVE TRACK TO USER DOC
         res.send(track);
       });
     }
   });
-
-
-  // res.json({hello: 'hi'});
 });
 
 app.post('/api/chart', function(req, res) {
@@ -90,7 +92,8 @@ app.post('/api/chart', function(req, res) {
     }
     res.json(tracks);
   });
-})
+});
 
+app.post('/api/login', function(req, res) {
 
-module.exports = app;
+});

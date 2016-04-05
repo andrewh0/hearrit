@@ -53,4 +53,20 @@ angular.module('hearrit.services', [])
   return {
     getAllTracks: getAllTracks
   }
+})
+.factory('Auth', function($http) {
+  var loginOrSignup = function() {
+    return $http({
+      method: 'POST',
+      url: '/api/login',
+      data: {}
+    }).then(function successCallback(response) {
+      return response.data;
+    }, function errorCallback(response) {
+      console.log('Error signing up or logging in: ', response);
+    })
+  };
+  return {
+    loginOrSignup: loginOrSignup
+  }
 });
