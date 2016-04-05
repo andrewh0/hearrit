@@ -1,6 +1,7 @@
 <div id="chart" ng-controller="chartController">
   <h1>CHART</h1>
-  <div ng-repeat="track in tracks">
+  <div ng-repeat="track in allTracks">
     <p>{{track.title}}</p>
+    <p>{{track.recommends}}</p>
   </div>
 </div>

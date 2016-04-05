@@ -37,4 +37,20 @@ angular.module('hearrit.services', [])
    return {
      recommendTrack: recommendTrack
    }
+})
+.factory('Chart', function($http) {
+  var getAllTracks = function() {
+    return $http({
+      method: 'POST',
+      url: '/api/chart',
+      data: {}
+    }).then(function successCallback(response) {
+      return response.data;
+    }, function errorCallback(response) {
+      console.log('Error recommending track: ', response);
+    })
+  };
+  return {
+    getAllTracks: getAllTracks
+  }
 });

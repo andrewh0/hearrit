@@ -82,5 +82,15 @@ app.post('/api/recommend', function(req, res) {
   // res.json({hello: 'hi'});
 });
 
+app.post('/api/chart', function(req, res) {
+  var currUser = req.body.user;
+  Track.find({}, function(error, tracks) {
+    if (error) {
+      console.log('Error getting chart: ', error);
+    }
+    res.json(tracks);
+  });
+})
+
 
 module.exports = app;
