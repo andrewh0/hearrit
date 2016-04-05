@@ -5,14 +5,12 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
-// var tracks = require('./tracks/trackController.js');
 var Track = require('./tracks/trackModel.js');
 var User = require('./users/userModel.js')
 
 SC.init({
   id: keys.clientID,
   secret: keys.clientSecret
-  // uri: 'http://example.com/callback'
 })
 
 mongoose.connect('mongodb://localhost/hearrit');
@@ -26,12 +24,6 @@ app.use(bodyParser.json());
 app.use(session({
   secret: 'THIS IS A SECRET.'
 }));
-
-// SC.get('/resolve', {
-//   url: 'https://soundcloud.com/kanyewest/ultralight-beam'
-// }, function(err, user) {
-//   console.log('kanye\'s id', user);
-// });
 
 app.get('/', function(req, res) {
   res.render('index');
@@ -49,29 +41,56 @@ app.post('/api/search', function(req, res) {
 });
 
 app.post('/api/recommend', function(req, res) {
-  // console.log('Recommended', req.body.track);
   var selectedTrack = req.body.track;
   var currentUser = req.session.user;
-  // Check currentUser to see if track has already been Recommended
-  // if already recommended, res.send(track);
-  // else...
 
-  Track.findOne({id: selectedTrack.id}, function (error, track) {
-    if (error) {
-      console.log(error);
+  var alreadyRecommended = function() {
+    for (var i = 0; i < currentUser.recommendedTracks.length; i++) {
+      if (currentUser.recommendedTracks[i].id === selectedTrack.id) {
+        return true;
+      }
     }
-    console.log(track);
-    if (track === null) {
-      Track.create(selectedTrack, function(err, newTrack) {
-        if (err) {
-          console.log('Error creating a new track', err);
-        }
-        newTrack.recommends = 1;
-        newTrack.save(function(err, savedTrack) {
+    return false;
+  }
+
+  if (alreadyRecommended()) {
+    res.send(selectedTrack);
+  } else {
+    Track.findOne({id: selectedTrack.id}, function (error, track) {
+      if (error) {
+        console.log(error);
+      }
+      if (track === null) {
+        Track.create(selectedTrack, function(err, newTrack) {
+          if (err) {
+            console.log('Error creating a new track', err);
+          }
+          newTrack.recommends = 1;
+          newTrack.save(function(err, savedTrack) {
+            if (err) {
+              console.log('Error updating recommend count: ', err);
+            }
+            // SAVE TRACK TO USER DOC
+            User.findOneAndUpdate(
+              {username: currentUser.username},
+              {$push: {recommendedTracks: savedTrack}},
+              {upsert: false},
+              function(error, user) {
+                if (error) {
+                  console.log('Error', error);
+                }
+                currentUser.recommendedTracks.push(savedTrack);
+                res.send(savedTrack);
+              }
+            );
+          });
+        });
+      } else {
+        track.recommends += 1;
+        track.save(function(err, savedTrack) {
           if (err) {
             console.log('Error updating recommend count: ', err);
           }
-          // SAVE TRACK TO USER DOC
           User.findOneAndUpdate(
             {username: currentUser.username},
             {$push: {recommendedTracks: savedTrack}},
@@ -80,51 +99,25 @@ app.post('/api/recommend', function(req, res) {
               if (error) {
                 console.log('Error', error);
               }
+              console.log('THE USER IS: ', user);
               currentUser.recommendedTracks.push(savedTrack);
               res.send(savedTrack);
             }
           );
         });
-      });
-    } else {
-      // if track already exists in the db
-      // console.log('recommends++');
-      track.recommends += 1;
-      track.save(function(err, savedTrack) {
-        if (err) {
-          console.log('Error updating recommend count: ', err);
-        }
-        // SAVE TRACK TO USER DOC
-        User.findOneAndUpdate(
-          {username: currentUser.username},
-          {$push: {recommendedTracks: savedTrack}},
-          {upsert: false},
-          function(error, user) {
-            if (error) {
-              console.log('Error', error);
-            }
-            console.log('THE USER IS: ', user);
-            currentUser.recommendedTracks.push(savedTrack);
-            res.send(savedTrack);
-          }
-        );
-      });
-    }
-  });
+      }
+    });
+  }
 });
 
 app.get('/api/recommended', function(req, res) {
   var user = req.session;
-  console.log('Current user is: ', user);
   User.findOne({username: user.user.username}, function(err, foundUser) {
     if (err) {
       console.log('Error getting user:', err);
     }
-    console.log('THE FOUND USER IS:', foundUser);
     res.json(foundUser);
   });
-
-  // res.json(user.recommendedTracks);
 });
 
 app.post('/api/chart', function(req, res) {
