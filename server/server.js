@@ -144,7 +144,6 @@ app.post('/api/login', function(req, res) {
             console.log('Could not create session: ', err);
           }
           req.session.user = createdUser;
-          console.log('SESSION:', req.session);
           res.json(createdUser);
         });
       });
@@ -155,7 +154,6 @@ app.post('/api/login', function(req, res) {
             console.log('Could not create session: ', err);
           }
           req.session.user = user;
-          console.log('SESSION:', req.session);
           res.json(user); 
         });
       } else {
