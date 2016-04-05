@@ -2,6 +2,7 @@ var express = require('express');
 var SC = require('node-soundcloud');
 var keys = require('./config');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var mongoose = require('mongoose');
 // var tracks = require('./tracks/trackController.js');
 var Track = require('./tracks/trackModel.js');
@@ -21,6 +22,9 @@ app.listen(8000);
 app.use(express.static('client'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(session({
+  secret: 'THIS IS A SECRET.'
+}));
 
 // SC.get('/resolve', {
 //   url: 'https://soundcloud.com/kanyewest/ultralight-beam'
@@ -104,14 +108,35 @@ app.post('/api/login', function(req, res) {
         username: username,
         password: password
       }, function(error, createdUser) {
-        res.json(createdUser);
+        req.session.regenerate(function(err) {
+          if (err) {
+            console.log('Could not create session: ', err);
+          }
+          req.session.user = createdUser;
+          res.json(createdUser);
+        });
       });
     } else {
       if (user.password === password) {
-        res.json(user);
+        req.session.regenerate(function(err) {
+          if (err) {
+            console.log('Could not create session: ', err);
+          }
+          req.session.user = user;
+          res.json(user); 
+        });
       } else {
         res.json({err: 'Password is incorrect.'});
       }
     }
   })
+});
+
+app.get('/api/logout', function(req, res) {
+  req.session.destroy(function(err) {
+    if (err) {
+      console.log('Could not sign out properly', err);
+    }
+    res.status(200).send();
+  });
 });
