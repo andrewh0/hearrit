@@ -4,7 +4,8 @@
     <input type="text" name="searchInput" placeholder="Search for a SoundCloud track..." ng-model="query">
     <button name="searchSubmit">Search</button>
   </form>
-  <h1>RESULTS</h1>
+  <p ng-show="searchResults.length === 0">Search for a track you like on SoundCloud.</p>
+  <h1 ng-show="searchResults.length > 0">RESULTS</h1>
   <div ng-repeat="result in searchResults">
     <p ng-click="recommend(result)">RECOMMEND</p>
     <p>{{result.title}}</p>

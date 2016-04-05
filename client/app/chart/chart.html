@@ -1,5 +1,6 @@
 <div id="chart" ng-controller="chartController">
   <h1>CHART</h1>
+  <p ng-show="allTracks.length === 0">Nothing in the chart right now. Everyone's recommended tracks will show up here.</p>
   <div ng-repeat="track in allTracks | orderBy:sortType:sortReverse">
     <p>{{track.recommends}} {{track.title}}</p>
   </div>
