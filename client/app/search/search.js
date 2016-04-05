@@ -10,8 +10,8 @@ angular.module('hearrit.search', [])
     })
   };
 
-  $scope.recommend = function(trackID) {
-    Recommends.recommendTrack(trackID)
+  $scope.recommend = function(track) {
+    Recommends.recommendTrack(track)
     .then(function(result) {
       return result;
     })

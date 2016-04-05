@@ -10,3 +10,5 @@ var trackSchema = new Schema({
 });
 
 var Track = mongoose.model('Track', trackSchema);
+
+module.exports = Track;

@@ -6,7 +6,7 @@
   </form>
   <h1>RESULTS</h1>
   <div ng-repeat="result in searchResults">
-    <p ng-click="recommend(result.id)">RECOMMEND</p>
+    <p ng-click="recommend(result)">RECOMMEND</p>
     <p>{{result.title}}</p>
     <p>by {{result.user.username}}</p>
     <a href="{{result.permalink_url}}">Listen on SoundCloud</a>

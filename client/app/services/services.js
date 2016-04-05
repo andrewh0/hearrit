@@ -17,11 +17,16 @@ angular.module('hearrit.services', [])
   }
 })
 .factory('Recommends', function($http) {
-  var recommendTrack = function(trackID) {
+  var recommendTrack = function(track) {
     return $http({
       method: 'POST',
       url: '/api/recommend',
-      data: {trackID: trackID}
+      data: {track: {
+        id: track.id,
+        title: track.title,
+        artist: track.user.username,
+        url: track.permalink_url
+      }}
     }).then(function successCallback(response) {
       console.log(response);
       return response.data;

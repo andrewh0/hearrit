@@ -41,7 +41,7 @@ app.post('/api/search', function(req, res) {
 });
 
 app.post('/api/recommend', function(req, res) {
-  console.log(req.body.trackID);
+  console.log(req.body.track);
   res.json({hello: 'hi'});
 });
 
