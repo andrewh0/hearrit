@@ -28,7 +28,7 @@ angular.module('hearrit.services', [])
         url: track.permalink_url
       }}
     }).then(function successCallback(response) {
-      console.log(response);
+      console.log('Server responded with', response);
       return response.data;
     }, function errorCallback(response) {
       console.log('Error recommending track: ', response);
