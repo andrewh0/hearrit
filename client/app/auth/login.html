@@ -1,8 +1,9 @@
 <div id="login" ng-controller="loginController">
   <h1>LOG IN / SIGN UP</h1>
-  <form>
-    <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
+  <form name="login" ng-submit="loginOrSignup()">
+    <input name="username" type="text" placeholder="Username" ng-model="username">
+    <input name="password" type="password" placeholder="Password" ng-model="password">
     <button>Log In / Sign Up</button>
   </form>
+  <p ng-show="passwordInvalid">WRONG PASSWORD</p>
 </div>

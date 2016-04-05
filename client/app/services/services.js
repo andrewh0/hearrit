@@ -54,16 +54,24 @@ angular.module('hearrit.services', [])
     getAllTracks: getAllTracks
   }
 })
-.factory('Auth', function($http) {
-  var loginOrSignup = function() {
+.factory('Auth', function($http, $location) {
+  var loginOrSignup = function(username, password) {
     return $http({
       method: 'POST',
       url: '/api/login',
-      data: {}
+      data: {
+        username: username,
+        password: password
+      }
     }).then(function successCallback(response) {
+      if (response.data.err) {
+        $location.path('/login');
+      } else {
+        $location.path('/chart');
+      }
       return response.data;
     }, function errorCallback(response) {
-      console.log('Error signing up or logging in: ', response);
+      console.log('Error signing up or logging in: ', response.data);
     })
   };
   return {

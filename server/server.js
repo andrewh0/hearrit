@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 // var tracks = require('./tracks/trackController.js');
 var Track = require('./tracks/trackModel.js');
+var User = require('./users/userModel.js')
 
 SC.init({
   id: keys.clientID,
@@ -95,5 +96,22 @@ app.post('/api/chart', function(req, res) {
 });
 
 app.post('/api/login', function(req, res) {
-
+  var password = req.body.password;
+  var username = req.body.username;
+  User.findOne({username: username}, function(error, user) {
+    if (user === null) {
+      User.create({
+        username: username,
+        password: password
+      }, function(error, createdUser) {
+        res.json(createdUser);
+      });
+    } else {
+      if (user.password === password) {
+        res.json(user);
+      } else {
+        res.json({err: 'Password is incorrect.'});
+      }
+    }
+  })
 });
