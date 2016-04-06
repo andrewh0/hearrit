@@ -1,13 +1,15 @@
-<div id="login" ng-controller="loginController" class="container-fluid">
-  <h1>Log in or sign up.</h1>
-  <form name="login" ng-submit="loginOrSignup()">
-    <div class="form-group col-xs-4">
+<div id="login" ng-controller="loginController">
+  <div class="form-group col-md-4">
+    <form name="login" ng-submit="loginOrSignup()">
+    <h1>Log in or sign up.</h1>
+    <div class="form-group">
       <input name="username" type="text" placeholder="Username" ng-model="username" class="form-control">
     </div>
-    <div class="form-group col-xs-4">
+    <div class="form-group">
       <input name="password" type="password" placeholder="Password" ng-model="password" class="form-control">
     </div>
     <button class="btn btn-primary">Log In / Sign Up</button>
+    <p ng-show="passwordInvalid" class="text-danger">Wrong password.</p>
   </form>
-  <p ng-show="passwordInvalid" class="text-danger">Wrong password.</p>
+  </div>
 </div>

@@ -1,17 +1,17 @@
-<div id="search" ng-controller="searchController" class="container-fluid">
-  <div class="row">
-    <h1>SEARCH</h1>
-    <form name="searchForm" ng-submit="search()" class="col-xs-4">
-      <input type="text" name="searchInput" placeholder="Search SoundCloud..." ng-model="query" class="form-control">
+<div id="search" ng-controller="searchController">
+  <div class="col-md-6">
+    <h1>Find a song</h1>
+    <form name="searchForm" ng-submit="search()">
+      <div class="form-group">
+        <input type="text" name="searchInput" placeholder="Search SoundCloud..." ng-model="query" class="form-control">
+      </div>
       <button class="btn btn-primary" name="searchSubmit">Search</button>
     </form>
-  </div>
-  <div class="row">
-    <p ng-show="searchResults.length === 0">Search for a track you like on SoundCloud.</p>
+    <p class="text-muted" ng-show="searchResults.length === 0">Search for a track you like on SoundCloud.</p>
     <h1 ng-show="searchResults.length > 0">RESULTS</h1>
     <div ng-repeat="result in searchResults">
       <p><b>{{result.title}}</b> by {{result.user.username}}</p>
-      <button class="btn btn-default" ng-click="recommend(result)">LIKE</button>
+      <button class="btn btn-default" ng-click="recommend(result)">&hearts;</button>
       <a href="{{result.permalink_url}}">Listen on SoundCloud</a>
       <br/>
       <br/>
