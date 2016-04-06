@@ -1,16 +1,20 @@
-<div id="search" ng-controller="searchController">
-  <h1>SEARCH</h1>
-  <form name="searchForm" ng-submit="search()">
-    <input type="text" name="searchInput" placeholder="Search SoundCloud..." ng-model="query">
-    <button name="searchSubmit">Search</button>
-  </form>
-  <p ng-show="searchResults.length === 0">Search for a track you like on SoundCloud.</p>
-  <h1 ng-show="searchResults.length > 0">RESULTS</h1>
-  <div ng-repeat="result in searchResults">
-    <p><b>{{result.title}}</b> by {{result.user.username}}</p>
-    <button ng-click="recommend(result)">LIKE</button>
-    <a href="{{result.permalink_url}}">Listen on SoundCloud</a>
-    <br/>
-    <br/>
+<div id="search" ng-controller="searchController" class="container-fluid">
+  <div class="row">
+    <h1>SEARCH</h1>
+    <form name="searchForm" ng-submit="search()" class="col-xs-4">
+      <input type="text" name="searchInput" placeholder="Search SoundCloud..." ng-model="query" class="form-control">
+      <button class="btn btn-default" name="searchSubmit">Search</button>
+    </form>
+  </div>
+  <div class="row">
+    <p ng-show="searchResults.length === 0">Search for a track you like on SoundCloud.</p>
+    <h1 ng-show="searchResults.length > 0">RESULTS</h1>
+    <div ng-repeat="result in searchResults">
+      <p><b>{{result.title}}</b> by {{result.user.username}}</p>
+      <button class="btn btn-default" ng-click="recommend(result)">LIKE</button>
+      <a href="{{result.permalink_url}}">Listen on SoundCloud</a>
+      <br/>
+      <br/>
+    </div>
   </div>
 </div>

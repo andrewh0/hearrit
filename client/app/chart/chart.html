@@ -1,8 +1,8 @@
-<div id="chart" ng-controller="chartController">
+<div id="chart" ng-controller="chartController" class="container-fluid">
   <h1>CHART</h1>
   <p ng-show="allTracks.length === 0">Nothing in the chart right now. Everyone's recommended tracks will show up here.</p>
   <div ng-repeat="track in allTracks | orderBy:sortType:sortReverse">
     <p>{{track.recommends}} {{track.title}}</p>
-    <button ng-click="recommend(track);">LIKE</button>
+    <button ng-click="recommend(track)" class="btn btn-default">LIKE</button>
   </div>
 </div>
