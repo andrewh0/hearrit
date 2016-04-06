@@ -1,13 +1,10 @@
 <div id="chart" ng-controller="chartController">
   <div class="col-md-4">
     <h1>Most liked songs</h1>
-    <p ng-show="allTracks.length === 0">Nothing in the chart right now. Everyone's recommended tracks will show up here.</p>
+    <h4 class="lead text-muted" ng-show="allTracks.length === 0">Everyone's recommended tracks will show up here.</h4>
     <div ng-repeat="track in allTracks | orderBy:sortType:sortReverse">
-      <p>{{track.title}}</p>
+      <p><button ng-click="recommend(track)" class="btn btn-default">&hearts;</button>   <a href="{{result.url}}">{{track.title}}</a> by {{track.artist}}</p>
       <p>{{track.recommends}} likes</p>
-      <button ng-click="recommend(track)" class="btn btn-default">&hearts;</button>
-      <br/>
-      <br/>
       <br/>
     </div>
   </div>

@@ -1,11 +1,9 @@
 <div id="recommends" ng-controller="recommendsController">
   <div class="col-md-4">
     <h1>Songs you like</h1>
-    <p ng-show="recommendedTracks.length === 0">Tracks you like will show up here.</p>
+    <h4 class="lead text-muted" ng-show="recommendedTracks.length === 0">Tracks you like will show up here.</h4>
     <div ng-repeat="result in recommendedTracks">
-      <p><b>{{result.title}}</b> by {{result.artist}}</p>
-      <a href="{{result.url}}">Listen on SoundCloud</a>
-      <br/>
+      <p><a href="{{result.url}}">{{result.title}}</a> by {{result.artist}}</p>
       <br/>
     </div>
   </div>
